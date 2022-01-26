@@ -14,13 +14,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('home', [
+        "title" => "Home"
+    ]);
 });
-
 Route::get('/about', function () {
-    return view('about');
+    return view(
+        'about',
+        [
+            "title" => "About",
+            "nama" => "Raditya Putra Anugra Pratama",
+            "email" => "3103120177@student.smktelkom-pwt.sch.id",
+            "gambar" => "radit.jpg"
+        ]
+    );
 });
-
 Route::get('/gallery', function () {
-    return view('gallery');
+    return view('gallery', [
+        "title" => "Gallery"
+    ]);
 });
+use App\Http\Controllers\ContactController;
+Route::resource('/contacts', ContactController::class);
