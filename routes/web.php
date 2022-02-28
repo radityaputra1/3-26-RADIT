@@ -32,11 +32,8 @@ Route::get('/gallery', function () {
         "title" => "Gallery"
     ]);
 });
-Route::resource('/contacts', ContactController::class);
-
-Route::group(['middleware' => ['auth']], function () {
-    route::get('/home', [App\Http\Controller\HomeController::class, 'index'])->name('home'); 
-});
+Route::resource('/contact', ContactController::class);
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => ['auth']], function () {
+    route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
