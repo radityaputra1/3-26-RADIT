@@ -14,9 +14,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view(' contacts', [
-            "title" => "Contacts"
-        ]);
+        $contacts = Contact::paginate(10);
+        return view('admin/contact/index', compact('contacts'));
     }
 
     /**
@@ -26,7 +25,9 @@ class ContactController extends Controller
      */
     public function create()
     {
-        //
+        return view('contact', [
+            "title" => "contact"
+        ]);
     }
 
     /**
@@ -35,14 +36,12 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Requestk $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $contact = Contact::create($request->all());
         $contact->save();
-
-        return redirect('contacts');
-    
+        return redirect()->route('contact.create')->with('status', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -64,7 +63,8 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contact = Contact::findOrFail($id);
+        return view('admin/contact/edit', compact('contact'));
     }
 
     /**
@@ -76,7 +76,10 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $contact = Contact::findOrFail($id);
+        $contact->update($request->all());
+        $contact->save();
+        return redirect()->route('contact.index');
     }
 
     /**
@@ -87,6 +90,8 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contact = Contact::findOrFail($id);
+        $contact->delete();
+        return redirect()->route('contact.index');
     }
 }
